@@ -1,0 +1,11 @@
+lb config noauto \
+    --apt-indices false \
+    --apt-recommends false \
+    --archive-areas main \
+    --debootstrap-options "--variant=minbase" \
+    --clean \
+    --distribution wheezy \
+    --iso-application "Treasure Box" \
+    --iso-publisher "Marc Sibson" \
+    --mode debian \
+    "$@"
