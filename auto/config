@@ -2,6 +2,7 @@ lb config noauto \
     --apt-indices false \
     --apt-recommends false \
     --archive-areas main \
+    --bootappend-live "boot=live config" \
     --debootstrap-options "--variant=minbase" \
     --clean \
     --distribution wheezy \
