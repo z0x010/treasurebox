@@ -1,0 +1,15 @@
+# basic networking support
+netbase
+ifupdown
+dhcp3-client
+ssh
+iproute
+net-tools
+iputils-ping
+
+
+# network filesystem support
+nfs-kernel-server
+#samba
+avahi-daemon
+#netatalk
