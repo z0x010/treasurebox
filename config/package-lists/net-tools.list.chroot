@@ -7,6 +7,8 @@ iproute
 net-tools
 iputils-ping
 
+## backups
+rsync
 
 # network filesystem support
 nfs-kernel-server
