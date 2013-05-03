@@ -30,6 +30,9 @@ $(VM_DRIVE_FILE):
 run: $(IMAGE_FILE) $(VM_DRIVE_FILE)
 	kvm -cdrom binary.hybrid.iso -hda $(VM_DRIVE_FILE) -net nic,macaddr=$(VM_MAC) -net tap,script=/usr/bin/qemu-ifup
 
+usb: $(IMAGE_FILE)
+	@if [ -z "$(USBDEV)" ]; then echo "no USBDEV defined"; exit 1; fi
+	sudo dd if=$(IMAGE_FILE) of=$(USBDEV) conv=fsync
 
 clean:
 	sudo lb clean
