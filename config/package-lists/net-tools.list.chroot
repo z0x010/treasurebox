@@ -20,3 +20,6 @@ nfs-kernel-server
 #samba
 avahi-daemon
 #netatalk
+## file sharing
+# pyload, in packages.chroot, depends on the following
+python-pycurl python-crypto unrar-free
