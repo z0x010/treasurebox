@@ -1,0 +1,51 @@
+#!/bin/sh
+
+if [ "$(id -u)" != "0" ]; then
+  clear
+  echo "#########################################################"
+  echo "# please execute with 'sudo' or -DANGEROUS!!!- as root  #"
+  echo "# example: sudo tbox-develop <drive>                    #"
+  echo "#########################################################"
+  exit 1
+fi
+
+DISK=$(grep '/lib/live/mount/medium' /proc/mounts | sed 's|/dev/\(sd.\)1 .*|\1|')
+PART="/dev/${DISK}2"
+
+VENDOR=$(cat /sys/block/$DISK/device/vendor):
+MODEL=$(cat /sys/block/$DISK/device/model):
+
+echo -n "prepare $VENDOR $MODEL ($DISK) for development use? [y/N]"
+read CONFIRM
+
+if [ "$CONFIRM" != "y" ]; then
+    echo "aborting.."
+    exit 0
+fi
+
+echo "creating persistence partition on $DISK..."
+parted -s "/dev/$DISK" unit MB mkpart primary ext2 -- 255 100%
+
+echo "telling kernel we have a new partition table..."
+partprobe "/dev/$DISK"
+
+echo "creating filesystem on $PART..."
+mkfs.ext4 "$PART" -L persistence
+
+echo "mounting partition $PART ..."
+MOUNTPOINT=$(mktemp -d)
+mount -t ext4 "$PART" $MOUNTPOINT
+
+echo "configuring persistence"
+echo "/ union" > $MOUNTPOINT/persistence.conf
+
+echo "syncing disk..."
+sync
+
+echo "unmounting partition $MOUNTPOINT ..."
+umount $MOUNTPOINT
+
+echo "cleaning up..."
+rmdir $MOUNTPOINT
+
+echo "reboot, to use development mode"

@@ -4,3 +4,10 @@ e2fsprogs
 recover
 rsyslog
 logrotate
+
+parted
+e2fsprogs
+recover
+
+vim
+less

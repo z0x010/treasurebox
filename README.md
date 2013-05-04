@@ -24,9 +24,27 @@ Treasure Box is a simple to use NAS that helps store, organize share and protect
   2. Boot your computer from the USB Key
   3. Tell TreasureBox which drive to use, this will *destroy* any data on the drive
 
-        mkfs.ext4 -L tbox-storage /dev/drive  # often /dev/sda
+        sudo mkfs.ext4 -L tbox-storage /dev/drive  # often /dev/sda
+        sudo mount /shares
+        sudo tbox-init-drive
 
   4. reboot and use another computer to access your TreasureBox
 
+        sudo reboot
+
+## Development
+
+If you would like to work on TreasureBox please feel free to contact me, any
+help would be appreciated.
+If you want a new feature adding it might be a good idea to discuss it with
+me before working on it.
+To keep TreasureBox simple I'm going to be very careful about adding new
+features.
+I value your time and don't want to reject your hard work simply because it didn't fit well with the goals of the project.
+
+To iterate more quickly than constantly building new images you can test changes by your device by enabling persistence.
+
+    sudo tbox-develop
+    sudo reboot
 
 .. _linuxliveusb: http://www.linuxliveusb.com/en/download

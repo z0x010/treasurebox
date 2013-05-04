@@ -1,0 +1,55 @@
+#!/bin/sh
+
+create_filesystem()
+{
+    DEV=$1
+}
+
+setup_permissions()
+{
+    MNT=$1
+
+# for now give everyone permissions for everything
+    chown -R nobody:nogroup $MNT/*
+    find $MNT/* -type d -print0 | xargs -0 chmod 777 
+    find $MNT/* -type f -print0 | xargs -0 chmod 666
+}
+
+persist_config()
+{
+    MNT=$1
+    SIZE=$2
+
+    truncate -s $SIZE $MNT/persistence
+    mkfs.ext4 -F -L tbox-config $MNT/persistence
+
+    MNTPNT=$(mktemp -d)
+    mount -t ext4 $MNT/persistence $MNTPNT
+    echo "/etc union" > $MNTPNT/persistence.conf
+    sync
+    umount $MNTPNT
+    rmdir $MNTPNT
+}
+
+
+if [ "$(id -u)" != "0" ]; then
+  clear
+  echo "#########################################################"
+  echo "# please execute with 'sudo' or -DANGEROUS!!!- as root  #"
+  echo "# example: sudo tbox-init-drive <drive>                 #"
+  echo "#########################################################"
+  exit 1
+fi
+
+SHARE=/shares
+
+echo "setting up filesystem"
+create_filesystem
+
+echo "configuring permissions"
+setup_permissions $SHARE
+
+echo "configuring persistence"
+persist_config $SHARE 128M
+
+echo "reboot, for config changes to be saved"
