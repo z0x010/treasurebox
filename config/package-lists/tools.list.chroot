@@ -1,7 +1,5 @@
-vim
-less
-e2fsprogs
-recover
+acpi
+
 rsyslog
 logrotate
 
