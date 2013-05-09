@@ -10,8 +10,8 @@ iputils-ping
 ## backups
 rsync
 
-# network filesystem support
+## network filesystem support
 nfs-kernel-server
 #samba
 avahi-daemon
-#netatalk
+netatalk
