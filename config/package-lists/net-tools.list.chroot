@@ -1,4 +1,6 @@
-# basic networking support
+# Networking Packages
+
+## base support
 netbase
 ifupdown
 dhcp3-client
@@ -10,8 +12,14 @@ iputils-ping
 ## backups
 rsync
 
-# network filesystem support
+## web
+nginx
+
+## network filesystem support
 nfs-kernel-server
 #samba
 avahi-daemon
 #netatalk
+
+## file sharing
+transmission-daemon
