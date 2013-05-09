@@ -19,7 +19,7 @@ nginx
 nfs-kernel-server
 samba
 avahi-daemon
-#netatalk
+netatalk
 
 ## file sharing
 transmission-daemon
