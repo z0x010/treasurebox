@@ -12,6 +12,6 @@ rsync
 
 # network filesystem support
 nfs-kernel-server
-#samba
+samba
 avahi-daemon
 #netatalk
