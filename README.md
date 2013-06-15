@@ -19,7 +19,7 @@ Treasure Box is a simple to use NAS that helps store, organize share and protect
 ## Install
 
   1. Create a USB key
-    - On windows use _linuxliveusb to create a USB Key, this is easiest
+    - On windows use [Live Live USB][linuxliveusb] to create a USB Key, this is easiest option
     - On linux, run dd if=TreasureBox-VERSION.iso of=/dev/your/usb/drive
   2. Boot your computer from the USB Key
   3. Tell TreasureBox which drive to use, this will *destroy* any data on the drive
@@ -58,4 +58,4 @@ To iterate more quickly than constantly building new images you can test changes
     sudo tbox-develop
     sudo reboot
 
-.. _linuxliveusb: http://www.linuxliveusb.com/en/download
+[linuxliveusb]: http://www.linuxliveusb.com/en/download "Linux Live USB"
