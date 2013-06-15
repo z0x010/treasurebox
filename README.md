@@ -34,6 +34,17 @@ Treasure Box is a simple to use NAS that helps store, organize share and protect
 
 ## Development
 
+# Building an Image
+
+TreasureBox uses live-build from the Debian Live Project to build images.
+You can install live-build from the externals/live-build directory.
+
+	cd external/live-build && sudo make install
+
+You will also need some build tools::
+
+	sudo apt-get install debootstrap syslinux
+
 If you would like to work on TreasureBox please feel free to contact me, any
 help would be appreciated.
 If you want a new feature adding it might be a good idea to discuss it with
