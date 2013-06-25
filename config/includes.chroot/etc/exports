@@ -1,1 +1,1 @@
-/shares *(rw,root_squash,sync,no_subtree_check,fsid=0,mp=/shares)
+/shares *(ro,all_squash,sync,no_subtree_check,insecure,fsid=0,mp=/shares)

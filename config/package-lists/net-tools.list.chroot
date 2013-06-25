@@ -1,4 +1,6 @@
-# basic networking support
+# Networking Packages
+
+## base support
 netbase
 ifupdown
 dhcp3-client
@@ -10,8 +12,16 @@ iputils-ping
 ## backups
 rsync
 
-# network filesystem support
+## web
+nginx
+
+## network filesystem support
 nfs-kernel-server
-#samba
+samba
 avahi-daemon
-#netatalk
+netatalk
+
+## file sharing
+transmission-daemon
+# pyload, in packages.chroot, depends on the following
+python-pycurl python-crypto unrar-free
