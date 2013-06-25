@@ -15,6 +15,9 @@ PART="/dev/${DISK}2"
 VENDOR=$(cat /sys/block/$DISK/device/vendor):
 MODEL=$(cat /sys/block/$DISK/device/model):
 
+MOUNTPOINT=$(mktemp -d)
+UNETBOOTIN=$(grep ubnkern /proc/cmdline)
+
 echo -n "prepare $VENDOR $MODEL ($DISK) for development use? [y/N]"
 read CONFIRM
 
@@ -23,18 +26,24 @@ if [ "$CONFIRM" != "y" ]; then
     exit 0
 fi
 
-echo "creating persistence partition on $DISK..."
-parted -s "/dev/$DISK" unit MB mkpart primary ext2 -- 255 100%
+if [ -n "$UNETBOOTIN" ]; then
+    mount -o remount,rw /dev/${DISK}1 /lib/live/mount/medium
+    dd if=/dev/null of=/persistence bs=1 count=0 seek=3G
+    mkfs.ext4 -F /persistence
+    mount -t ext4 /persistence $MOUNTPOINT
+else
+    echo "creating persistence partition on $DISK..."
+    parted -s "/dev/$DISK" unit MB mkpart primary ext2 -- 255 100%
 
-echo "telling kernel we have a new partition table..."
-partprobe "/dev/$DISK"
+    echo "telling kernel we have a new partition table..."
+    partprobe "/dev/$DISK"
 
-echo "creating filesystem on $PART..."
-mkfs.ext4 "$PART" -L persistence
+    echo "creating filesystem on $PART..."
+    mkfs.ext4 "$PART" -L persistence
 
-echo "mounting partition $PART ..."
-MOUNTPOINT=$(mktemp -d)
-mount -t ext4 "$PART" $MOUNTPOINT
+    echo "mounting partition $PART ..."
+    mount -t ext4 "$PART" $MOUNTPOINT
+fi
 
 echo "configuring persistence"
 echo "/ union" > $MOUNTPOINT/persistence.conf
