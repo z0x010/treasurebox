@@ -21,6 +21,7 @@ Treasure Box is a simple to use NAS that helps store, organize share and protect
   1. Create a USB key
     - On windows use [Live Live USB][linuxliveusb] to create a USB Key, this is easiest option
     - On linux, run dd if=TreasureBox-VERSION.iso of=/dev/your/usb/drive
+    - On MacOSX, use Unetbootin
   2. Boot your computer from the USB Key
   3. Tell TreasureBox which drive to use, this will *destroy* any data on the drive
 
@@ -33,6 +34,22 @@ Treasure Box is a simple to use NAS that helps store, organize share and protect
         sudo reboot
 
 ## Development
+
+# SSH
+
+You can access your treasurebox via SSH, using the password "live".
+
+    ssh user@treasurebox.local
+
+# Experimenting
+
+To iterate more quickly than constantly building new images you can test changes by your device by enabling persistence.
+
+    sudo tbox-develop
+    sudo reboot
+
+After rebooting any changes you make will survive future reboots
+
 
 # Building an Image
 
@@ -47,15 +64,5 @@ You will also need some build tools::
 
 If you would like to work on TreasureBox please feel free to contact me, any
 help would be appreciated.
-If you want a new feature adding it might be a good idea to discuss it with
-me before working on it.
-To keep TreasureBox simple I'm going to be very careful about adding new
-features.
-I value your time and don't want to reject your hard work simply because it didn't fit well with the goals of the project.
-
-To iterate more quickly than constantly building new images you can test changes by your device by enabling persistence.
-
-    sudo tbox-develop
-    sudo reboot
 
 [linuxliveusb]: http://www.linuxliveusb.com/en/download "Linux Live USB"
