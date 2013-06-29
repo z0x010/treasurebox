@@ -29,7 +29,14 @@ Treasure Box is a simple to use NAS that helps store, organize share and protect
         sudo mount /shares
         sudo tbox-init-drive
 
-  4. reboot and use another computer to access your TreasureBox
+  4. (Optional) enable use as a Time Machine Backup
+
+        sudo tbox-init-timemachine
+
+    Then configure Time Machine on your Mac using the login of 'user' and
+    password 'live'
+
+  5. reboot and use another computer to access your TreasureBox
 
         sudo reboot
 

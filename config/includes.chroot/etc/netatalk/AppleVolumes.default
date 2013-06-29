@@ -174,9 +174,7 @@
 :DEFAULT: cnidscheme:dbd options:upriv,usedots
 
 # By default all users have access to their home directories.
-~/			"Home Directory"
+#~/			"Home Directory"
 
-# 200GB
-/share/time-machine "TBox Time Machine" allow:@tmusers cnidscheme:dbd volsizelimit:200000 options:usedots,upriv,tm
-
-# End of File
+# limit disk usage to 512GB
+"/shares/Time Machine Backups" "Time Machine Backup Volume" allow:@tmusers cnidscheme:dbd volsizelimit:512000 options:usedots,upriv,tm

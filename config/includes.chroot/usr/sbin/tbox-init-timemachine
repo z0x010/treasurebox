@@ -1,0 +1,8 @@
+TM_DIR="/shares/Time Machine Backups"
+USER=user
+sudo groupadd tmusers
+sudo usermod -a -G tmusers $USER
+
+sudo mkdir -p "$TM_DIR"
+sudo chown -R root:tmusers "$TM_DIR"
+sudo chmod 770 -R "$TM_DIR"
