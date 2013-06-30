@@ -178,3 +178,7 @@
 
 # limit disk usage to 512GB
 "/shares/Time Machine Backups" "Time Machine Backup Volume" allow:@tmusers cnidscheme:dbd volsizelimit:512000 options:usedots,upriv,tm
+/shares/Downloads "Downloads"
+"/shares/TV Shows" "TV Shows"
+/shares/Movies "Movies"
+/shares/Pictures "Pictures"
