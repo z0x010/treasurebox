@@ -49,7 +49,7 @@ server {
 	#}
 
     location /transmission {
-        proxy_pass          http://localhost:9091;
+        proxy_pass          http://127.0.0.1:9091;
         proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         proxy_redirect      off;
         proxy_buffering     off;
@@ -57,9 +57,6 @@ server {
         proxy_set_header    X-Real-IP       $remote_addr;
     }
 
-	location /pyload {
-		proxy_pass http://127.0.0.1:9000;
-	}
 	#error_page 404 /404.html;
 
 	# redirect server error pages to the static page /50x.html
