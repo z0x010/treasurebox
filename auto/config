@@ -9,4 +9,5 @@ lb config noauto \
     --iso-application "Treasure Box" \
     --iso-publisher "Marc Sibson" \
     --mode debian \
+    --source false \
     "$@"
