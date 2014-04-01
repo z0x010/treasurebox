@@ -9,7 +9,9 @@ before_install:
 install:
   - cd external/live-build && sudo make install
 
-script: make
+script: 
+  - ls -R *
+  - make
 
 #deploy:
 #  edge: true
