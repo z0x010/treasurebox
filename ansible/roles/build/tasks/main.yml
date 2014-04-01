@@ -5,8 +5,6 @@
     - debootstrap
     - syslinux
 
-- name: Fetch live-build tools
-  command: make external chdir=/mnt/src creates=external/live-build/Makefile
-
-- name: Install live-build
-  command: make install chdir=/mnt/src/external/live-build creates=/usr/bin/lb
+- file: src=/mnt/src/auto dest=auto state=link
+- file: src=/mnt/src/config dest=config state=link
+- file: src=/mnt/src/makefile dest=makefile state=link
