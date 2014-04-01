@@ -16,6 +16,12 @@ Treasure Box is a simple to use NAS that helps store, organize share and protect
   - USB Key to install TreasureBox onto
   - A Computer with hard disk, any recent PC should be fine
 
+## Use Cases
+
+  - Media server for XBMC/Openelec
+  - Store Apple Time Machine Backups
+  - General Purpose File Server NFS/Samba
+
 ## Install
 
   1. Create a USB key
