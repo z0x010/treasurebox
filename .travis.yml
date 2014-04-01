@@ -7,7 +7,7 @@ before_install:
   - make external
 
 install:
-  - cd external/live-build && sudo make install
+  - sudo make -C external/live-build install
 
 script: 
   - ls -R *
