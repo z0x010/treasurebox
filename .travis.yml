@@ -1,0 +1,21 @@
+---
+language: c
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y debootstrap syslinux
+
+install:
+  - cd external/live-build && sudo make install
+
+script: make build
+
+#deploy:
+#  edge: true
+#  provider: releases
+#  api-key:
+#    - secure: <encrypted GitHub oauth token with repo or repo:public permission>
+#  file: binary.hybrid.iso
+#  on:
+#    tags: true
+#    all_branches: true
