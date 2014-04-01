@@ -25,7 +25,7 @@ rebuild: $(LB_CONFIG_FILES) $(LB_CONFIG_EXTRAS)
 $(VM_DRIVE_FILE):
 	truncate -s $(VM_DRIVE_SIZE) $@
 
-.PHONY: run clean
+.PHONY: run clean external
 
 run: $(IMAGE_FILE) $(VM_DRIVE_FILE)
 	kvm -cdrom binary.hybrid.iso -hda $(VM_DRIVE_FILE) -net nic,macaddr=$(VM_MAC) -net tap,script=/usr/bin/qemu-ifup
@@ -33,6 +33,14 @@ run: $(IMAGE_FILE) $(VM_DRIVE_FILE)
 usb: $(IMAGE_FILE)
 	@if [ -z "$(USBDEV)" ]; then echo "no USBDEV defined"; exit 1; fi
 	sudo dd if=$(IMAGE_FILE) of=$(USBDEV) conv=fsync
+
+update:
+	rsync -av config/includes.chroot/etc user@treasurebox.local:
+	ssh user@treasurebox.local 'sudo cp -rv etc/* /etc && sudo reboot'
+
+external:
+	git submodule init
+	git submodule update
 
 clean:
 	sudo lb clean

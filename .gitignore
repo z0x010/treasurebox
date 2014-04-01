@@ -29,3 +29,9 @@ source*.tar*
 source*.contents
 source*.packages
 source*.zsync
+
+
+.vagrant/
+vagrant_ansible_inventory_default
+.SyncID
+.SyncIgnore

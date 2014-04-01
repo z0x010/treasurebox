@@ -1,0 +1,12 @@
+---
+- name: Install packages for building images
+  apt: name={{item}}
+  with_items:
+    - debootstrap
+    - syslinux
+
+- name: Fetch live-build tools
+  command: make external chdir=/mnt/src creates=external/live-build/Makefile
+
+- name: Install live-build
+  command: make install chdir=/mnt/src/external/live-build creates=/usr/bin/lb

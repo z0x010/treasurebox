@@ -1,0 +1,6 @@
+---
+- name: Configure Vagrant to create treasurebox images
+  hosts: default
+  sudo: true
+  roles:
+    - build
