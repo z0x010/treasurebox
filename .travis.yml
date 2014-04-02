@@ -9,9 +9,13 @@ install:
   - sudo make -C live-build install
   - which lb
   - lb --version
-  - sudo apt-get install -y debootstrap syslinux time live-build
+  - sudo apt-get install -y debootstrap syslinux time
+  - which lb
+  - lb --version
 
 script:
+  - which lb
+  - lb --version
   - make
 
 #deploy:
