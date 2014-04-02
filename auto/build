@@ -1,4 +1,4 @@
 #!/bin/sh
 
-lb build noauto "${@}" 2>&1 | tee binary.log
+lb build --verbose noauto "${@}" 2>&1 | tee binary.log
 [ -x /usr/bin/notify-send ] && notify-send "Treasure Box Build Complete"
