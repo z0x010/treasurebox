@@ -3,11 +3,8 @@ language: c
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y debootstrap syslinux time
-  - make external
-
-install:
-  - sudo make -C external/live-build install
+  - apt-cache search live-build
+  - sudo apt-get install -y debootstrap syslinux time live-build
 
 script:
   - make

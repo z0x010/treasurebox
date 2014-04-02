@@ -38,9 +38,5 @@ update:
 	rsync -av config/includes.chroot/etc user@treasurebox.local:
 	ssh user@treasurebox.local 'sudo cp -rv etc/* /etc && sudo reboot'
 
-external:
-	git submodule init
-	git submodule update
-
 clean:
 	sudo lb clean
