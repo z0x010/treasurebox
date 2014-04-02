@@ -1,3 +1,0 @@
-[submodule "external/live-build"]
-	path = external/live-build
-	url = git://live-systems.org/git/live-build.git
