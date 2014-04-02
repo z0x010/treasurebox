@@ -25,14 +25,17 @@ rebuild: $(LB_CONFIG_FILES) $(LB_CONFIG_EXTRAS)
 $(VM_DRIVE_FILE):
 	truncate -s $(VM_DRIVE_SIZE) $@
 
-.PHONY: run clean external
+.PHONY: run clean
 
 run: $(IMAGE_FILE) $(VM_DRIVE_FILE)
 	kvm -cdrom binary.hybrid.iso -hda $(VM_DRIVE_FILE) -net nic,macaddr=$(VM_MAC) -net tap,script=/usr/bin/qemu-ifup
 
 usb: $(IMAGE_FILE)
-	@if [ -z "$(USBDEV)" ]; then echo "no USBDEV defined"; exit 1; fi
-	sudo dd if=$(IMAGE_FILE) of=$(USBDEV) conv=fsync
+	@if [ -z "$(DEV)" ]; then echo "no DEV defined"; exit 1; fi
+	diskutil unmountDisk $(DEV)
+#	sudo dd if=$(IMAGE_FILE) of=$(DEV) conv=fsync bs=1m
+	sudo dd if=$(IMAGE_FILE) of=$(DEV) bs=1m
+	diskutil unmountDisk $(DEV)
 
 update:
 	rsync -av config/includes.chroot/etc user@treasurebox.local:
