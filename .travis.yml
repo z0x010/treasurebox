@@ -4,6 +4,9 @@ language: c
 before_install:
   - sudo apt-get update -qq
   - apt-cache search live-build
+
+install:
+  - sudo make -C live-build install
   - sudo apt-get install -y debootstrap syslinux time live-build
 
 script:
