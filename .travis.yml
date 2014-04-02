@@ -3,19 +3,12 @@ language: c
 
 before_install:
   - sudo apt-get update -qq
-  - apt-cache search live-build
 
 install:
-  - sudo make -C live-build install
-  - which lb
-  - lb --version
   - sudo apt-get install -y debootstrap syslinux time
-  - which lb
-  - lb --version
+  - sudo make -C live-build install
 
 script:
-  - which lb
-  - lb --version
   - make
 
 #deploy:
