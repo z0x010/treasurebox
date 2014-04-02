@@ -15,7 +15,7 @@ $(LB_CONFIG_FILES): auto/config
 	lb config
 
 $(IMAGE_FILE): $(LB_CONFIG_FILES)
-	time sudo lb build
+	time sudo lb build --verbose
 	ls -lah $@
 
 rebuild: $(LB_CONFIG_FILES) $(LB_CONFIG_EXTRAS)
