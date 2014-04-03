@@ -18,5 +18,5 @@ deploy:
     - secure: "RDp9Y4gqzQ3sEfLFW7O5pWU3D0VQD70H7/YBKYWiCSoKd1HF6yoe9RKtEXCyruCW5zFCcsEuFIrV3QKtoV9jhFutAFFXOo4yzwChhRyLeV6CEbhTynw8IV436d3tWZFbIxAqa7yQmeGEVhaArsDByWsxypr5VwolvpIVSiUXPV8="
   file: binary.hybrid.iso
   on:
-    tags: true
+    tags: false
     all_branches: true
