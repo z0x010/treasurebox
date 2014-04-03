@@ -5,6 +5,7 @@
     - debootstrap
     - syslinux
     - live-build
+    - git
 
 - file: src=/mnt/src/auto dest=auto state=link
 - file: src=/mnt/src/config dest=config state=link
