@@ -10,6 +10,7 @@ install:
 
 script:
   - make binary.hybrid.iso
+  - sudo chown $USER binary.hybrid.iso
 
 deploy:
   edge: true
