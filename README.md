@@ -1,62 +1,72 @@
 # Treasure Box
 
-Treasure Box is a simple to use NAS that helps store, organize share and protect your data: photos, documents, videos, backups.
-
+Treasure Box easy to install NAS that can store, organize, share and protect your photos, documents and videos.
 
 ## Goals
 
-  - appliance-like, just works, low maintaince
-  - copy to USB and run, including upgrades
-  - satisfy the common case, not every case
-
+  - appliance-like, it just works, low maintaince and minimal tech skills required
+  - up and running in 10min as simple as copy to USB and run, including upgrades
+  - the common case is easy, the advanced is possible
+  - preserve existing data on attached drives
 
 ## Requirements
 
-  - DHCP server on the network, usually your internet router
-  - USB Key to install TreasureBox onto
-  - A Computer with hard disk, any recent PC should be fine
+  - A Computer, any recent PC should be fine
+  - A USB Key to install TreasureBox onto
+  - A network connection for your computer, with a DHCP server. Usually, this means your DSL/Cable/WiFi router.
 
 ## Use Cases
 
-  - Media server for XBMC/Openelec
-  - Store Apple Time Machine Backups
-  - General Purpose File Server NFS/Samba
+  - Apple Time Machine Backups
+  - Central storage for your photos/videos
+  - DNLA Media server for XBMC/Openelec/Chromecast/Smart TV
+  - Manage and organize your photos/videos (TODO)
+  - Your own personal Cloud (TODO)
 
-## Install
+## Install and Setup
 
   1. Create a USB key
     - On windows use [Live Live USB][linuxliveusb] to create a USB Key, this is easiest option
-    - On linux, run dd if=TreasureBox-VERSION.iso of=/dev/your/usb/drive
-    - On MacOSX, use Unetbootin
+    - On linux, run dd if=treasurebox-VERSION.iso of=/dev/your/usb/drive
+    - On MacOSX, use [UNetBootin][unetbootin] or diskutil and dd if you are comfortable on the command line.
+
   2. Boot your computer from the USB Key
+
   3. Tell TreasureBox which drive to use, this will *destroy* any data on the drive
 
-        sudo mkfs.ext4 -L tbox-storage /dev/drive  # often /dev/sda
-        sudo mount /shares
-        sudo tbox-init-drive
+        sudo tbox-format-drive /dev/sda
 
-  4. (Optional) enable use as a Time Machine Backup
+    See [http://  ] for instructions how to configure a drive without destroying existing data
+     
+  4. 
+    1. (Optional) enable Time Machine Backup Service
 
         sudo tbox-init-timemachine
 
-    Then configure Time Machine on your Mac using the login of 'user' and
-    password 'live'
+    2. Configure Time Machine on your Mac using the login of 'user' and
+        password 'live'
 
-  5. reboot and use another computer to access your TreasureBox
+  5. reboot your Treasure Box
 
         sudo reboot
 
-## Development
+  6. Access Treasure Box from other machines on your network
 
-# SSH
+## SSH
 
 You can access your treasurebox via SSH, using the password "live".
 
     ssh user@treasurebox.local
 
-# Experimenting
+## Development
+If you would like to improve TreasureBox please feel free to contact me,
+help is appreciated.
 
-To iterate more quickly than constantly building new images you can test changes by your device by enabling persistence.
+
+### Experimenting
+
+If you want to quickly test some changes or customizations you can enable developer mode,
+which configures full persistence of the rootfs.
 
     sudo tbox-develop
     sudo reboot
@@ -64,18 +74,36 @@ To iterate more quickly than constantly building new images you can test changes
 After rebooting any changes you make will survive future reboots
 
 
-# Building an Image
+### Building an ISO
 
 TreasureBox uses live-build from the Debian Live Project to build images.
-You can install live-build from the externals/live-build directory.
 
-	cd external/live-build && sudo make install
+#### Linux (Debian/Ubuntu/Mint)
+If you are running linux then you can build natively
 
-You will also need some build tools::
+  1. Install live-build from the externals/live-build directory.
 
-	sudo apt-get install debootstrap syslinux
+    cd external/live-build && sudo make install
 
-If you would like to work on TreasureBox please feel free to contact me, any
-help would be appreciated.
+  2. Install build tools
+
+    sudo apt-get install debootstrap syslinux
+
+  3. make
+
+If you run into errors you can try following the Mac OSX instructions below, which use Vagrant.
+
+#### Mac OSX
+If running OSX you can use [http:// ](Vagrant) to setup a Virtual Machine.
+
+  1. Install Vagrant and VirtualBox
+  2. Install ansible
+  3. vagrant up
+  4. vagrant ssh
+  5. cd /mnt/src
+  6. make
+
+
 
 [linuxliveusb]: http://www.linuxliveusb.com/en/download "Linux Live USB"
+[unetbootin]: http://unetbootin.sourceforge.net/ "UNetBootin"
