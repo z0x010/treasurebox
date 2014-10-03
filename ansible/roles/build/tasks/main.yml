@@ -1,6 +1,6 @@
 ---
 - name: Install packages for building images
-  apt: name={{item}}
+  apt: name={{item}} update_cache=yes
   with_items:
     - debootstrap
     - syslinux
