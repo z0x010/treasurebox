@@ -1,8 +1,14 @@
 #!/bin/sh
 
-create_filesystem()
+create_shares()
 {
-    DEV=$1
+    MNT=$1
+
+    mkdir -p "$MNT/Memories"
+    mkdir -p "$MNT/Backups"
+    mkdir -p "$MNT/Downloads"
+    mkdir -p "$MNT/Movies"
+    mkdir -p "$MNT/TV Shows"
 }
 
 setup_permissions()
@@ -19,6 +25,10 @@ persist_config()
 {
     MNT=$1
     SIZE=$2
+
+    if [ -f $MNT/persistence ]; then
+        return
+    fi
 
     truncate -s $SIZE $MNT/persistence
     mkfs.ext4 -F -L tbox-config $MNT/persistence
@@ -43,8 +53,11 @@ fi
 
 SHARE=/shares
 
-echo "setting up filesystem"
-create_filesystem
+echo "ensuring drive is mounted"
+sudo mount $SHARE
+
+echo "create shares"
+create_shares $SHARE
 
 echo "configuring permissions"
 setup_permissions $SHARE
@@ -53,3 +66,4 @@ echo "configuring persistence"
 persist_config $SHARE 128M
 
 echo "reboot, for config changes to be saved"
+echo "e.g. sudo reboot"

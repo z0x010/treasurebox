@@ -1,4 +1,4 @@
-TM_DIR="/shares/Time Machine Backups"
+TM_DIR="/shares/Backups"
 USER=user
 sudo groupadd tmusers
 sudo usermod -a -G tmusers $USER

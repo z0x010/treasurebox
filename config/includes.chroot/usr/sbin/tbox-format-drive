@@ -1,0 +1,22 @@
+#!/bin/sh
+
+create_filesystem()
+{
+    DEV=$1
+    sudo mkfs.ext4 -L tbox-storage $DEV
+}
+
+
+if [ "$(id -u)" != "0" ]; then
+  clear
+  echo "#########################################################"
+  echo "# please execute with 'sudo' or -DANGEROUS!!!- as root  #"
+  echo "# example: sudo tbox-format-drive <drive>               #"
+  echo "#########################################################"
+  exit 1
+fi
+
+echo "setting up filesystem"
+create_filesystem $1
+
+tbox-init-drive
