@@ -3,7 +3,7 @@
 create_filesystem()
 {
     DEV=$1
-    sudo mkfs.ext4 -L tbox-storage $DEV
+    sudo mkfs.ext4 -L tbox-shares $DEV
 }
 
 
@@ -16,7 +16,20 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
+VENDOR=$(cat /sys/block/$DISK/device/vendor):
+MODEL=$(cat /sys/block/$DISK/device/model):
+
+clear
+echo "*** DANGER DANGER **"
+echo -n "Erase ALL DATA from $VENDOR $MODEL ($DEV)? [y/N]"
+read CONFIRM
+
+if [ "$CONFIRM" != "y" ]; then
+    echo "aborting.."
+    exit 0
+fi
+
 echo "setting up filesystem"
 create_filesystem $1
 
-tbox-init-drive
+/usr/sbin/tbox-init-drive
