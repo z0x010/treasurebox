@@ -30,7 +30,9 @@ source*.contents
 source*.packages
 source*.zsync
 
+treasurebox*.iso
 
+# Vagrant
 .vagrant/
 vagrant_ansible_inventory_default
 .SyncID

@@ -1,5 +1,10 @@
 #!/bin/sh
 
+usage()
+{
+    tbox-init-drive DEVICE
+}
+
 create_shares()
 {
     MNT=$1
@@ -51,7 +56,17 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
+DEV=$1
+
+if [ -z "$DEV" ]; then
+    usage
+    exit 1
+fi
+
 SHARE=/shares
+
+echo "claiming drive"
+e2label $DEV tbox-shares
 
 echo "ensuring drive is mounted"
 sudo mount $SHARE

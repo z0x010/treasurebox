@@ -28,17 +28,22 @@ Treasure Box easy to install NAS that can store, organize, share and protect you
   1. Create a USB key
     - On windows use [Live Live USB][linuxliveusb] to create a USB Key, this is easiest option
     - On linux, run dd if=treasurebox-VERSION.iso of=/dev/your/usb/drive
-    - On MacOSX, use [UNetBootin][unetbootin] or diskutil and dd if you are comfortable on the command line.
+    - On MacOSX, use [UNetBootin][unetbootin] or 
+
+        - diskutil list
+        - make usb DEV=/dev/diskXX
 
   2. Boot your computer from the USB Key
 
   3. Tell TreasureBox which drive to use, this will *destroy* any data on the drive
 
-        sudo tbox-format-drive /dev/sda
+        sudo tbox-format-drive /dev/sdXX
 
-    See [http://  ] for instructions how to configure a drive without destroying existing data
-     
-  4. 
+    Alternatively, you can try a non-destructive drive initialization by running
+
+        sudo tbox-init-drive /dev/sdXX
+
+  4.
     1. (Optional) enable Time Machine Backup Service
 
         sudo tbox-init-timemachine
@@ -65,10 +70,9 @@ help is appreciated.
 
 ### Experimenting
 
-If you want to quickly test some changes or customizations you can enable developer mode,
-which configures full persistence of the rootfs.
+If you want to quickly test some changes or customizations you can enable full persitence
 
-    sudo tbox-develop
+    sudo tbox-init-full-persistence
     sudo reboot
 
 After rebooting any changes you make will survive future reboots
