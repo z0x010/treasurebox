@@ -57,4 +57,4 @@ umount $MOUNTPOINT
 echo "cleaning up..."
 rmdir $MOUNTPOINT
 
-echo "reboot, to use development mode"
+echo "reboot, to use full persistence"
