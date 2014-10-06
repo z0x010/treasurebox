@@ -26,7 +26,7 @@ SRC_DIR=
 endif
 
 ifdef TRAVIS_TAG
-VERSION=$(TRAVIS_TAG)
+VERSION=-$(TRAVIS_TAG)
 else
 VERSION=-$(shell cd $(SRC_DIR) && git describe --tags --always --dirty)
 endif
