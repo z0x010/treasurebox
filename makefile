@@ -25,8 +25,12 @@ else
 SRC_DIR=
 endif
 
-
+ifdef TRAVIS_TAG
+VERSION=TRAVIS_TAG
+else
 VERSION=-$(shell cd $(SRC_DIR) && git describe --tags --always --dirty)
+endif
+
 IMAGE_FILE?=$(SRC_DIR)treasurebox$(VERSION).iso
 
 BINARY_ISO=binary.hybrid.iso
