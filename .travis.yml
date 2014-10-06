@@ -9,15 +9,14 @@ install:
   - sudo make -C live-build install
 
 script:
-  - make binary.hybrid.iso
-  - sudo chown $USER binary.hybrid.iso
+  - make
 
 deploy:
   edge: true
   provider: releases
   api-key:
     - secure: "RDp9Y4gqzQ3sEfLFW7O5pWU3D0VQD70H7/YBKYWiCSoKd1HF6yoe9RKtEXCyruCW5zFCcsEuFIrV3QKtoV9jhFutAFFXOo4yzwChhRyLeV6CEbhTynw8IV436d3tWZFbIxAqa7yQmeGEVhaArsDByWsxypr5VwolvpIVSiUXPV8="
-  file: binary.hybrid.iso
+  file: treasurebox-$TRAVIS_TAG.iso
   on:
     tags: true
     all_branches: true
