@@ -20,14 +20,14 @@ VM_MAC?="DE:AD:BE:EF:7B:04"
 # handle split src/build dir
 
 ifeq ($(USER), vagrant)
-SRC_DIR=/mnt/src
+SRC_DIR=/mnt/src/
 else
 SRC_DIR=
 endif
 
 
-VERSION=$(shell cd $(SRC_DIR) && git describe --tags --always --dirty)
-IMAGE_FILE?=$(SRC_DIR)/treasurebox-$(VERSION).iso
+VERSION=-$(shell cd $(SRC_DIR) && git describe --tags --always --dirty)
+IMAGE_FILE?=$(SRC_DIR)treasurebox$(VERSION).iso
 
 BINARY_ISO=binary.hybrid.iso
 LB_CONFIG_FILES=$(addprefix config/, binary bootstrap chroot common source)
@@ -49,11 +49,11 @@ $(BINARY_ISO): $(LB_CONFIG_FILES)
 	time sudo lb build
 
 ifdef SRC_DIR
-$(SRC_DIR)/$(BINARY_ISO): $(BINARY_ISO)
+$(SRC_DIR)$(BINARY_ISO): $(BINARY_ISO)
 	sudo install --owner $(USER) $< $@
 endif
 
-$(IMAGE_FILE): $(SRC_DIR)/$(BINARY_ISO)
+$(IMAGE_FILE): $(SRC_DIR)$(BINARY_ISO)
 	sudo install --owner $(USER) $< $@
 	ls -lah $@
 
