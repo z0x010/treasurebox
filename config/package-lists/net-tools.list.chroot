@@ -23,5 +23,9 @@ netatalk
 
 ## file sharing
 transmission-daemon
+
 # pyload, in packages.chroot, depends on the following
 python-pycurl python-crypto unrar-free
+
+# plex needs
+avahi-utils

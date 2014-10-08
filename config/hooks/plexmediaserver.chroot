@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+adduser --quiet --system --shell /bin/bash --home /var/lib/plexmediaserver --group plex
+
+#mkdir -p /var/lib/plexmediaserver
+#chown plex:plex /var/lib/plexmediaserver
