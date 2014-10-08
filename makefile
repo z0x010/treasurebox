@@ -19,8 +19,11 @@ VM_MAC?="DE:AD:BE:EF:7B:04"
 
 # handle split src/build dir
 
+VERSION_CMD:=git describe --tags --always --dirty
+
 ifeq ($(USER), vagrant)
 SRC_DIR=/mnt/src/
+VERSION_CMD=cd $(SRC_DIR) && $(VERSION_CMD)
 else
 SRC_DIR=
 endif
@@ -28,7 +31,7 @@ endif
 ifdef TRAVIS_TAG
 VERSION=-$(TRAVIS_TAG)
 else
-VERSION=-$(shell cd $(SRC_DIR) && git describe --tags --always --dirty)
+VERSION=-$(shell $(VERSION_CMD))
 endif
 
 IMAGE_FILE?=$(SRC_DIR)treasurebox$(VERSION).iso
@@ -82,7 +85,7 @@ vbox-destroy:
 
 usb: $(IMAGE_FILE)
 	@if [ -z "$(DEV)" ]; then \
-		echo "no DEV defined"; \
+		echo "no DEV defined; make dev DEV=/dev/????"; \
 		diskutil list; \
 		exit 1; \
 	fi
@@ -93,7 +96,7 @@ usb: $(IMAGE_FILE)
 
 update:
 	rsync -av config/includes.chroot/etc user@treasurebox.local:
-	ssh user@treasurebox.local 'sudo cp -rv etc/* /etc && sudo reboot'
+	ssh user@treasurebox.local 'sudo cp -rv etc/* /etc'
 
 clean:
 	sudo lb clean
