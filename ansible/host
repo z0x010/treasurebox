@@ -1,0 +1,2 @@
+[treasurebox]
+treasurebox.local ansible_ssh_user=user

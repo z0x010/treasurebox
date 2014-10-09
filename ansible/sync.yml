@@ -1,0 +1,7 @@
+---
+- name: Sync Config
+  hosts: treasurebox
+  user: user
+  sudo: yes
+  tasks:
+    - synchronize: src=../config/includes.chroot/etc/ dest=/etc

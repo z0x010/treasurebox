@@ -23,15 +23,14 @@ VERSION_CMD:=git describe --tags --always --dirty
 
 ifeq ($(USER), vagrant)
 SRC_DIR=/mnt/src/
-VERSION_CMD=cd $(SRC_DIR) && $(VERSION_CMD)
+VERSION=-$(shell cd $(SRC_DIR) && $(VERSION_CMD))
 else
 SRC_DIR=
+VERSION=-$(shell $(VERSION_CMD))
 endif
 
 ifdef TRAVIS_TAG
 VERSION=-$(TRAVIS_TAG)
-else
-VERSION=-$(shell $(VERSION_CMD))
 endif
 
 IMAGE_FILE?=$(SRC_DIR)treasurebox$(VERSION).iso
@@ -95,8 +94,7 @@ usb: $(IMAGE_FILE)
 	diskutil unmountDisk $(DEV)
 
 update:
-	rsync -av config/includes.chroot/etc user@treasurebox.local:
-	ssh user@treasurebox.local 'sudo cp -rv etc/* /etc'
+	ansible-playbook -i ansible/host --ask-pass ansible/sync.yml
 
 clean:
 	sudo lb clean
