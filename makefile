@@ -25,7 +25,6 @@ ifeq ($(USER), vagrant)
 SRC_DIR=/mnt/src/
 VERSION=-$(shell cd $(SRC_DIR) && $(VERSION_CMD))
 else
-SRC_DIR=
 VERSION=-$(shell $(VERSION_CMD))
 endif
 
@@ -54,13 +53,11 @@ $(LB_CONFIG_FILES): auto/config
 $(BINARY_ISO): $(LB_CONFIG_FILES)
 	time sudo lb build
 
+$(IMAGE_FILE): $(BINARY_ISO)
+	sudo install --owner $(USER) $< $@
 ifdef SRC_DIR
-$(SRC_DIR)$(BINARY_ISO): $(BINARY_ISO)
-	sudo install --owner $(USER) $< $@
+	cd $(SRC_DIR) && ln -sf $(basename $@) $(BINARY_ISO)
 endif
-
-$(IMAGE_FILE): $(SRC_DIR)$(BINARY_ISO)
-	sudo install --owner $(USER) $< $@
 	ls -lah $@
 
 $(VM_DRIVE_FILE):
@@ -82,7 +79,7 @@ vbox-destroy:
 	VBoxManage unregistervm $(VM_NAME) --delete
 	rm -f $(VM_NAME).vdi
 
-usb: $(IMAGE_FILE)
+usb: $(BINARY_ISO)
 	@if [ -z "$(DEV)" ]; then \
 		echo "no DEV defined; make dev DEV=/dev/????"; \
 		diskutil list; \
@@ -90,8 +87,8 @@ usb: $(IMAGE_FILE)
 	fi
 	diskutil unmountDisk $(DEV)
 #	sudo dd if=$(IMAGE_FILE) of=$(DEV) conv=fsync bs=1m
-	sudo dd if=$(IMAGE_FILE) of=$(DEV) bs=1m
-	diskutil unmountDisk $(DEV)
+	sudo dd if=$< of=$(DEV) bs=1m
+	diskutil eject $(DEV)
 
 update:
 	ansible-playbook -i ansible/host --ask-pass ansible/sync.yml

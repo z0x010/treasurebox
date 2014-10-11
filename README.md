@@ -43,25 +43,26 @@ Treasure Box easy to install NAS that can store, organize, share and protect you
 
         sudo tbox-init-drive /dev/sdXX
 
-  4.
-    1. (Optional) enable Time Machine Backup Service
+    - Optionally, enable Time Machine Backup Service
 
         sudo tbox-init-timemachine
 
-    2. Configure Time Machine on your Mac using the login of 'user' and
+    - Configure Time Machine on your Mac using the login of 'user' and
         password 'live'
 
-  5. reboot your Treasure Box
+  4. reboot your Treasure Box
 
         sudo reboot
 
-  6. Access Treasure Box from other machines on your network
+  5. Access http://treasurebox.local, username/password is the name of the service
+
 
 ## SSH
 
 You can access your treasurebox via SSH, using the password "live".
 
     ssh user@treasurebox.local
+
 
 ## Development
 If you would like to improve TreasureBox please feel free to contact me,
@@ -95,7 +96,7 @@ If you are running linux then you can build natively
 
   3. make
 
-If you run into errors you can try following the Mac OSX instructions below, which use Vagrant.
+If you run into errors you can try following the OSX instructions below, which use Vagrant for a standardized build environment.
 
 #### Mac OSX
 If running OSX you can use [http:// ](Vagrant) to setup a Virtual Machine.
@@ -104,8 +105,7 @@ If running OSX you can use [http:// ](Vagrant) to setup a Virtual Machine.
   2. Install ansible
   3. vagrant up
   4. vagrant ssh
-  5. cd /mnt/src
-  6. make
+  5. make
 
 
 
