@@ -56,7 +56,7 @@ $(BINARY_ISO): $(LB_CONFIG_FILES)
 $(IMAGE_FILE): $(BINARY_ISO)
 	sudo install --owner $(USER) $< $@
 ifdef SRC_DIR
-	cd $(SRC_DIR) && ln -sf $(basename $@) $(BINARY_ISO)
+	cd $(SRC_DIR) && ln -sf $(notdir $@) $(BINARY_ISO)
 endif
 	ls -lah $@
 
@@ -91,7 +91,7 @@ usb: $(BINARY_ISO)
 	diskutil eject $(DEV)
 
 update:
-	ansible-playbook -i ansible/host --ask-pass ansible/sync.yml
+	ansible-playbook -i ansible/host ansible/sync.yml
 
 clean:
 	sudo lb clean
