@@ -77,8 +77,9 @@ create_shares $SHARE
 echo "configuring permissions"
 setup_permissions $SHARE
 
-echo "configuring persistence"
-persist_config $SHARE 128M
+# disabled ref #26
+# echo "configuring persistence"
+# persist_config $SHARE 128M
 
 echo "reboot, for config changes to be saved"
 echo "e.g. sudo reboot"
