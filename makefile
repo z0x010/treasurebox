@@ -23,23 +23,24 @@ VERSION_CMD:=git describe --tags --always --dirty
 
 ifeq ($(USER), vagrant)
 SRC_DIR=/mnt/src/
-VERSION=-$(shell cd $(SRC_DIR) && $(VERSION_CMD))
+VERSION=$(shell cd $(SRC_DIR) && $(VERSION_CMD))
 else
-VERSION=-$(shell $(VERSION_CMD))
+VERSION=$(shell $(VERSION_CMD))
 endif
-
 ifdef TRAVIS_TAG
-VERSION=-$(TRAVIS_TAG)
+VERSION=$(TRAVIS_TAG)
 endif
 
-IMAGE_FILE?=$(SRC_DIR)treasurebox$(VERSION).iso
-
+VERSION_FILE=config/includes.chroot/treasurebox_version
+IMAGE_FILE?=$(SRC_DIR)treasurebox-$(VERSION).iso
 BINARY_ISO=binary.hybrid.iso
+
 LB_CONFIG_FILES=$(addprefix config/, binary bootstrap chroot common source)
 LB_CONFIG_EXTRAS+=$(wildcard config/package-lists/*)
 LB_CONFIG_EXTRAS+=$(wildcard config/hooks/*)
 LB_CONFIG_EXTRAS+=$(wildcard config/includes.chroot/*/*)
 
+.PHONY: run clean $(VERSION_FILE)
 
 rebuild: $(LB_CONFIG_FILES) $(LB_CONFIG_EXTRAS)
 	$(MAKE) clean
@@ -50,7 +51,10 @@ build: $(IMAGE_FILE)
 $(LB_CONFIG_FILES): auto/config
 	lb config
 
-$(BINARY_ISO): $(LB_CONFIG_FILES)
+$(VERSION_FILE):
+	echo $(VERSION) > $@
+
+$(BINARY_ISO): $(LB_CONFIG_FILES) $(VERSION_FILE)
 	time sudo lb build
 
 $(IMAGE_FILE): $(BINARY_ISO)
@@ -63,7 +67,6 @@ endif
 $(VM_DRIVE_FILE):
 	truncate -s $(VM_DRIVE_SIZE) $@
 
-.PHONY: run clean
 
 kvm: $(BINARY_ISO) $(VM_DRIVE_FILE)
 	kvm -cdrom $(BINARY_ISO) -hda $(VM_DRIVE_FILE) -net nic,macaddr=$(VM_MAC) -net tap,script=/usr/bin/qemu-ifup
