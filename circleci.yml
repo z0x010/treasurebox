@@ -1,0 +1,12 @@
+dependencies:
+  override:
+    - sudo apt-get install -y debootstrap syslinux time
+    - sudo make -C live-build install
+
+test:
+  override:
+    - make
+
+general:
+    artifacts:
+        - treasurebox-$CIRCLE_BUILD_NUM
