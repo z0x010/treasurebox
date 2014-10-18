@@ -1,8 +1,12 @@
 #!/bin/sh
+#
+# This script should be idempotent abd safe to run on any existing system
+#
+set -e
 
 usage()
 {
-    tbox-init-drive DEVICE
+    echo "usage: tbox-init-drive /dev/sdX"
 }
 
 create_shares()
@@ -31,16 +35,20 @@ persist_config()
     MNT=$1
     SIZE=$2
 
-    if [ -f $MNT/persistence ]; then
-        return
+    if [ ! -f $MNT/persistence ]; then
+        truncate -s $SIZE $MNT/persistence
+        mkfs.ext4 -F -L tbox-config $MNT/persistence
     fi
-
-    truncate -s $SIZE $MNT/persistence
-    mkfs.ext4 -F -L tbox-config $MNT/persistence
 
     MNTPNT=$(mktemp -d)
     mount -t ext4 $MNT/persistence $MNTPNT
-    echo "/etc union" > $MNTPNT/persistence.conf
+
+    cat << EOF > $MNTPNT/persistence.conf
+    /var/lib/transmission-daemon union
+    /etc/transmission union
+    /home/live union
+EOF
+
     sync
     umount $MNTPNT
     rmdir $MNTPNT
@@ -58,6 +66,7 @@ fi
 
 DEV=$1
 
+echo "dev is $DEV $1"
 if [ -z "$DEV" ]; then
     usage
     exit 1
@@ -69,7 +78,7 @@ echo "claiming drive"
 e2label $DEV tbox-shares
 
 echo "ensuring drive is mounted"
-sudo mount $SHARE
+mountpoint $SHARE || sudo mount $SHARE
 
 echo "create shares"
 create_shares $SHARE
@@ -77,9 +86,8 @@ create_shares $SHARE
 echo "configuring permissions"
 setup_permissions $SHARE
 
-# disabled ref #26
-# echo "configuring persistence"
-# persist_config $SHARE 128M
+echo "configuring persistence"
+persist_config $SHARE 512M
 
-echo "reboot, for config changes to be saved"
-echo "e.g. sudo reboot"
+echo "*** reboot, for config changes to be saved"
+echo '`sudo reboot`'
