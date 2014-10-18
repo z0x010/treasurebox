@@ -31,7 +31,7 @@ ifdef TRAVIS_TAG
 VERSION=$(TRAVIS_TAG)
 endif
 
-VERSION_FILE=config/includes.chroot/treasurebox_version
+VERSION_FILE=config/includes.chroot/etc/treasurebox_version
 IMAGE_FILE?=$(SRC_DIR)treasurebox-$(VERSION).iso
 BINARY_ISO=binary.hybrid.iso
 
@@ -40,7 +40,7 @@ LB_CONFIG_EXTRAS+=$(wildcard config/package-lists/*)
 LB_CONFIG_EXTRAS+=$(wildcard config/hooks/*)
 LB_CONFIG_EXTRAS+=$(wildcard config/includes.chroot/*/*)
 
-.PHONY: run clean $(VERSION_FILE)
+.PHONY: run clean
 
 rebuild: $(LB_CONFIG_FILES) $(LB_CONFIG_EXTRAS)
 	$(MAKE) clean
@@ -51,10 +51,8 @@ build: $(IMAGE_FILE)
 $(LB_CONFIG_FILES): auto/config
 	lb config
 
-$(VERSION_FILE):
-	echo $(VERSION) > $@
-
-$(BINARY_ISO): $(LB_CONFIG_FILES) $(VERSION_FILE)
+$(BINARY_ISO) $(VERSION_FILE): $(LB_CONFIG_FILES)
+	echo $(VERSION) > $(VERSION_FILE)
 	time sudo lb build
 
 $(IMAGE_FILE): $(BINARY_ISO)

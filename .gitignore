@@ -21,6 +21,7 @@ config/bootstrap
 config/chroot
 config/common
 config/source
+config/includes.chroot/etc/treasurebox_version
 
 source/
 source*.iso
