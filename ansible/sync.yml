@@ -5,3 +5,5 @@
   sudo: yes
   tasks:
     - synchronize: src=../config/includes.chroot/etc/ dest=/etc
+    - synchronize: src=../config/includes.chroot/usr/ dest=/usr
+    - synchronize: src=../config/includes.chroot/srv/ dest=/srv
