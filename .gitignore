@@ -38,3 +38,6 @@ treasurebox*.iso
 vagrant_ansible_inventory_default
 .SyncID
 .SyncIgnore
+
+# vbox images
+tbtestvm.vdi

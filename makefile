@@ -7,10 +7,10 @@
 #
 
 # You may want to override these settings using environment vars
-VM_DRIVE_FILE?=/tmp/tbox.disk
-VM_DRIVE_SIZE?=1G
-VM_NAME?=tbtest
+VM_NAME?=tbtestvm
 VM_MAC?="DE:AD:BE:EF:7B:04"
+VM_SHARES_DISK?=$(VM_NAME).vdi
+VM_SHARES_SIZE?=10000
 
 
 #
@@ -62,23 +62,21 @@ ifdef SRC_DIR
 endif
 	ls -lah $@
 
-$(VM_DRIVE_FILE):
-	truncate -s $(VM_DRIVE_SIZE) $@
+kvm: $(BINARY_ISO) $(VM_SHARES_DISK)
+	kvm -cdrom $(BINARY_ISO) -hda $(VM_SHARES_DISK) -net nic,macaddr=$(VM_MAC) -net tap,script=/usr/bin/qemu-ifup
 
+$(VM_SHARES_DISK):
+	VBoxManage createhd --filename $@ --size $(VM_SHARES_SIZE)
 
-kvm: $(BINARY_ISO) $(VM_DRIVE_FILE)
-	kvm -cdrom $(BINARY_ISO) -hda $(VM_DRIVE_FILE) -net nic,macaddr=$(VM_MAC) -net tap,script=/usr/bin/qemu-ifup
-
-vbox: $(BINARY_ISO)
+vbox-up:
 	VBoxManage startvm $(VM_NAME)
 
-vbox-create:
+vbox-create: $(VM_SHARES_DISK)
 	./vbox-create.sh $(VM_NAME)
 
 vbox-destroy:
 	-VBoxManage controlvm $(VM_NAME) poweroff
 	VBoxManage unregistervm $(VM_NAME) --delete
-	rm -f $(VM_NAME).vdi
 
 usb: $(BINARY_ISO)
 	@if [ -z "$(DEV)" ]; then \
