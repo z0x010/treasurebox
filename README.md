@@ -12,7 +12,7 @@ Treasure Box easy to install NAS that can store, organize, share and protect you
 ## Requirements
 
   - A Computer, any recent PC should be fine
-  - A USB Key to install TreasureBox onto
+  - A USB Drive to install TreasureBox onto
   - A network connection for your computer, with a DHCP server. Usually, this means your DSL/Cable/WiFi router.
 
 ## Use Cases

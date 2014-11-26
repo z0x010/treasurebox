@@ -32,4 +32,4 @@ fi
 echo "setting up filesystem"
 create_filesystem $1
 
-/usr/sbin/tbox-init-drive
+/usr/sbin/tbox-init-drive $1

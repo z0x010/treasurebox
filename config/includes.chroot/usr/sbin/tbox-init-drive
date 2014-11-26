@@ -1,6 +1,7 @@
 #!/bin/sh
 #
-# This script should be idempotent abd safe to run on any existing system
+# This script should be idempotent and safe to run on any existing system
+#
 #
 set -e
 
@@ -26,8 +27,8 @@ setup_permissions()
 
 # for now give everyone permissions for everything
     chown -R nobody:nogroup $MNT/*
-    find $MNT/* -type d -print0 | xargs -0 chmod 777 
-    find $MNT/* -type f -print0 | xargs -0 chmod 666
+    find $MNT/* -type d -print0 | xargs -0 chmod 777
+    find $MNT/* -type f -print0 | xargs -0 --no-run-if-empty chmod 666
 }
 
 persist_config()
@@ -66,7 +67,6 @@ fi
 
 DEV=$1
 
-echo "dev is $DEV $1"
 if [ -z "$DEV" ]; then
     usage
     exit 1
@@ -74,11 +74,11 @@ fi
 
 SHARE=/shares
 
-echo "claiming drive"
+echo "claiming drive $DEV"
 e2label $DEV tbox-shares
 
-echo "ensuring drive is mounted"
-mountpoint $SHARE || sudo mount $SHARE
+echo "ensuring $DEV is mounted"
+mountpoint $SHARE > /dev/null || sudo mount $SHARE
 
 echo "create shares"
 create_shares $SHARE

@@ -40,7 +40,7 @@ LB_CONFIG_EXTRAS+=$(wildcard config/package-lists/*)
 LB_CONFIG_EXTRAS+=$(wildcard config/hooks/*)
 LB_CONFIG_EXTRAS+=$(wildcard config/includes.chroot/*/*)
 
-.PHONY: run clean
+.PHONY: run clean distclean
 
 rebuild: $(LB_CONFIG_FILES) $(LB_CONFIG_EXTRAS)
 	$(MAKE) clean
@@ -94,6 +94,9 @@ update:
 
 clean:
 	sudo lb clean
+
+distclean: clean
+	sudo rm -rf cache/
 
 help:
 	@echo "rebuild			clean and build iso image"
