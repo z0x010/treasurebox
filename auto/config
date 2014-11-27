@@ -3,7 +3,7 @@ lb config noauto \
     --apt-recommends true \
     --archives live.debian.net \
     --archive-areas main \
-    --bootappend-live "boot=live hostname=treasurebox live-config persistence noeject quickreboot toram" \
+    --bootappend-live "boot=live hostname=treasurebox live-config persistence noeject quickreboot" \
     --clean \
     --distribution wheezy \
     --iso-application "Treasure Box" \
