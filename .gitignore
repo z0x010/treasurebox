@@ -41,3 +41,6 @@ vagrant_ansible_inventory_default
 
 # vbox images
 tbtestvm.vdi
+
+# OS cruft
+.DS_Store

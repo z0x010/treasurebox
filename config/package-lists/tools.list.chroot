@@ -9,3 +9,6 @@ recover
 
 vim
 less
+
+# for ansible support
+python-apt

@@ -1,0 +1,3 @@
+---
+- name: restart crashplan
+  action: /etc/init.d/crashplan restart

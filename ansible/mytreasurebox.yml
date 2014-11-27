@@ -1,0 +1,6 @@
+---
+- name: Customize treasurebox
+  hosts: treasurebox
+  sudo: true
+  roles:
+    - crashplan

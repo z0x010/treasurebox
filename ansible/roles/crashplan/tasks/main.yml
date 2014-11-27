@@ -1,0 +1,33 @@
+---
+- name:  dependencies
+  apt: name={{item}} state=installed update_cache=yes cache_valid_time=3600
+  with_items:
+    - tar
+    - openjdk-7-jre-headless
+
+- name: download
+  get_url: url=http://download.crashplan.com/installs/linux/install/CrashPlan/CrashPlan_{{crashplan_version}}_Linux.tgz dest=/tmp/CrashPlan_{{crashplan_version}}_Linux.tgz
+
+- name: extract
+  command: tar xvzf CrashPlan_{{crashplan_version}}_Linux.tgz chdir=/tmp creates=/tmp/CrashPlan-install
+
+- name: prepare
+  file: path=/opt/CrashPlan state=directory
+
+- name: install
+  shell: gunzip -c /tmp/CrashPlan-install/CrashPlan_{{crashplan_version}}.cpi | cpio -i --no-preserve-owner chdir=/opt/CrashPlan creates=/opt/CrashPlan/bin
+
+- name: setup
+  copy: src=install.vars dest=/opt/CrashPlan/install.vars
+
+- name: executable
+  copy: src=CrashPlanEngine dest=/opt/CrashPlan/bin/CrashPlanEngine mode=755
+
+- name: initscript
+  copy: src=crashplan.init dest=/etc/init.d/crashplan mode=755
+
+- name: startup
+  service: name=crashplan state=started enabled=yes
+
+- name: running
+  wait_for: port=4242 delay=3 timeout=60
